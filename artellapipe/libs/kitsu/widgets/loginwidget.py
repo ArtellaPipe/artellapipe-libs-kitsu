@@ -24,7 +24,8 @@ class KitsuLoginWidget(QFrame, object):
     def __init__(self, parent=None):
         super(KitsuLoginWidget, self).__init__(parent)
 
-        self.setStyleSheet("#background {border-radius: 3px;border-style: solid;border-width: 1px;border-color: rgb(32,32,32);}")
+        self.setStyleSheet(
+            "#background {border-radius: 3px;border-style: solid;border-width: 1px;border-color: rgb(32,32,32);}")
         self.setFrameShape(QFrame.StyledPanel)
         self.setFrameShadow(QFrame.Raised)
 

@@ -251,7 +251,8 @@ class KitsuLoginDialog(dialog.ArtellaDialog, object):
                 self.validLogin.emit()
                 self.close()
         else:
-            qtutils.show_error(self, 'Error while logging into Kitsu', 'Kitsu credentials are not valid. Try again please!')
+            qtutils.show_error(
+                self, 'Error while logging into Kitsu', 'Kitsu credentials are not valid. Try again please!')
             self._main_stack.slide_in_index(0)
             return False
 
