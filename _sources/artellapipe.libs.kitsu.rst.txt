@@ -1,6 +1,14 @@
 artellapipe.libs.kitsu package
 ==============================
 
+Subpackages
+-----------
+
+.. toctree::
+
+   artellapipe.libs.kitsu.core
+   artellapipe.libs.kitsu.widgets
+
 Module contents
 ---------------
 

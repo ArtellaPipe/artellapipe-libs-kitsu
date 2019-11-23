@@ -1,0 +1,19 @@
+artellapipe.libs.kitsu.core package
+===================================
+
+Submodules
+----------
+
+.. toctree::
+
+   artellapipe.libs.kitsu.core.kitsuclasses
+   artellapipe.libs.kitsu.core.kitsulib
+   artellapipe.libs.kitsu.core.tracking
+
+Module contents
+---------------
+
+.. automodule:: artellapipe.libs.kitsu.core
+   :members:
+   :undoc-members:
+   :show-inheritance:

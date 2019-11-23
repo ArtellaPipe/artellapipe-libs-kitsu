@@ -1,0 +1,7 @@
+artellapipe.libs.kitsu.core.kitsuclasses module
+===============================================
+
+.. automodule:: artellapipe.libs.kitsu.core.kitsuclasses
+   :members:
+   :undoc-members:
+   :show-inheritance:

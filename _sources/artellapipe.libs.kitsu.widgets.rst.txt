@@ -1,0 +1,19 @@
+artellapipe.libs.kitsu.widgets package
+======================================
+
+Submodules
+----------
+
+.. toctree::
+
+   artellapipe.libs.kitsu.widgets.logindialog
+   artellapipe.libs.kitsu.widgets.loginwidget
+   artellapipe.libs.kitsu.widgets.userinfo
+
+Module contents
+---------------
+
+.. automodule:: artellapipe.libs.kitsu.widgets
+   :members:
+   :undoc-members:
+   :show-inheritance:

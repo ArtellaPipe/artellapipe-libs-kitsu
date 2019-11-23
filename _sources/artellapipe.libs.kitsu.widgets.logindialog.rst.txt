@@ -1,0 +1,7 @@
+artellapipe.libs.kitsu.widgets.logindialog module
+=================================================
+
+.. automodule:: artellapipe.libs.kitsu.widgets.logindialog
+   :members:
+   :undoc-members:
+   :show-inheritance:

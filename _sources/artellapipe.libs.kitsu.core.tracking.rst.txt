@@ -1,0 +1,7 @@
+artellapipe.libs.kitsu.core.tracking module
+===========================================
+
+.. automodule:: artellapipe.libs.kitsu.core.tracking
+   :members:
+   :undoc-members:
+   :show-inheritance:

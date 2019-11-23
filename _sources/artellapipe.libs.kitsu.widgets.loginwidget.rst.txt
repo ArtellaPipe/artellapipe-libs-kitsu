@@ -1,0 +1,7 @@
+artellapipe.libs.kitsu.widgets.loginwidget module
+=================================================
+
+.. automodule:: artellapipe.libs.kitsu.widgets.loginwidget
+   :members:
+   :undoc-members:
+   :show-inheritance:

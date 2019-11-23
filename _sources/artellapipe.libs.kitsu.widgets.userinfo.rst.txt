@@ -1,0 +1,7 @@
+artellapipe.libs.kitsu.widgets.userinfo module
+==============================================
+
+.. automodule:: artellapipe.libs.kitsu.widgets.userinfo
+   :members:
+   :undoc-members:
+   :show-inheritance:
