@@ -175,6 +175,15 @@ class KitsuAsset(object):
         return self._preview_file_id
 
     @property
+    def data(self):
+        """
+        Returns extra metadata attributes associated to this asset
+        :return: dict
+        """
+
+        return self._data
+
+    @property
     def canceled(self):
         """
         Returns whether the asset has been cancelled or not
@@ -327,6 +336,15 @@ class KitsuSequence(object):
         self._type = data.get('type', None)
 
     @property
+    def name(self):
+        """
+        Returns the name of the sequence
+        :return: str
+        """
+
+        return self._name
+
+    @property
     def id(self):
         """
         Returns sequence ID
@@ -336,13 +354,22 @@ class KitsuSequence(object):
         return self._id
 
     @property
-    def name(self):
+    def type(self):
         """
-        Returns the name of the sequence
+        Returns sequence type
         :return: str
         """
 
-        return self._name
+        return self._type
+
+    @property
+    def entity_type_id(self):
+        """
+        Returns sequence entity type id
+        :return: str
+        """
+
+        return self._entity_type_id
 
     @property
     def number_of_frames(self):
@@ -361,3 +388,125 @@ class KitsuSequence(object):
         """
 
         return self._description
+
+    @property
+    def preview_file_id(self):
+        """
+        Returns asset preview file id
+        :return: str
+        """
+
+        return self._preview_file_id
+
+    @property
+    def canceled(self):
+        """
+        Returns whether the asset has been cancelled or not
+        :return: bool
+        """
+
+        return self._canceled
+
+
+class KitsuShot(object):
+    def __init__(self, data):
+        super(KitsuShot, self).__init__()
+
+        self._dict = data
+
+        self._id = data.get('id', None)
+        self._number_of_frames = data.get('nb_frames', None)
+        self._description = data.get('description', None)
+        self._entity_type_id = data.get('entity_type_id', None)
+        self._code = data.get('code', None)
+        self._name = data.get('name', '')
+        self._preview_file_id = data.get('preview_file_id', None)
+        self._data = data.get('data', None)
+        self._created_at = data.get('created_at', '')
+        self._shotgun_id = data.get('shotgun_id', None)
+        self._updated_at = data.get('upadted_at', '')
+        self._canceled = data.get('canceled', False)
+        self._parent_id = data.get('parent_id', None)
+        self._source_id = data.get('source_id', None)
+        self._project_id = data.get('project_id', None)
+        self._type = data.get('type', None)
+
+    @property
+    def name(self):
+        """
+        Returns the name of the shot
+        :return: str
+        """
+
+        return self._name
+
+    @property
+    def id(self):
+        """
+        Returns shot ID
+        :return: str
+        """
+
+        return self._id
+
+    @property
+    def parent_id(self):
+        """
+        Returns shot parent ID (ID of the sequence this shot belongs to)
+        :return:
+        """
+
+        return self._parent_id
+
+    @property
+    def type(self):
+        """
+        Returns shot type
+        :return: str
+        """
+
+        return self._type
+
+    @property
+    def entity_type_id(self):
+        """
+        Returns shot entity type id
+        :return: str
+        """
+
+        return self._entity_type_id
+
+    @property
+    def number_of_frames(self):
+        """
+        Returns the number of frames of the shot
+        :return: int
+        """
+
+        return self._number_of_frames
+
+    @property
+    def description(self):
+        """
+        Returns shot description
+        :return: str
+        """
+
+        return self._description
+
+    @property
+    def preview_file_id(self):
+        """
+        Returns shot preview file id
+        :return: str
+        """
+
+        return self._preview_file_id
+
+    def to_dict(self):
+        """
+        Returns dict data of the shot
+        :return: dict
+        """
+
+        return self._dict
