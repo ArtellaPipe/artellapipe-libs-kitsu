@@ -12,9 +12,13 @@ __license__ = "MIT"
 __maintainer__ = "Tomas Poveda"
 __email__ = "tpovedatd@gmail.com"
 
+import  logging
+
 import gazu
 
 from artellapipe.libs.kitsu.core import kitsuclasses
+
+LOGGER = logging.getLogger()
 
 
 def set_host(new_host):
@@ -124,6 +128,7 @@ def get_project_entity_types():
 def get_all_sequences(project_id, as_dict=False):
     """
     Returns all sequences for the given project
+    :param project_id: variant, str or dict
     :param as_dict: bool, Whether to return data as dict or as Kitsu class
     :return: list(dict) or list(KitsuSequence)
     """
@@ -137,3 +142,42 @@ def get_all_sequences(project_id, as_dict=False):
         return sequences
 
     return [kitsuclasses.KitsuSequence(sequence) for sequence in sequences]
+
+
+def get_all_shots(project_id, as_dict=False):
+    """
+    Returns all shots for the given project
+    :param project_id: variant, str or dict
+    :param as_dict: bool, Whether to return data as dict or as Kitsu class
+    :return: list(dict) or list(KitsuShot)
+    """
+
+    if type(project_id) != dict:
+        project_id = {'id': project_id}
+
+    shots = gazu.shot.all_shots_for_project(project_id)
+
+    if as_dict:
+        return shots
+
+    return [kitsuclasses.KitsuShot(shot) for shot in shots]
+
+
+def get_shot_sequence(shot_dict, as_dict=False):
+    """
+    Returns sequence given shot belongs to
+    :param shot_dict:
+    :param as_dict:  bool, Whether to return data as dict or as Kitsu class
+    :return:
+    """
+
+    if 'parent_id' not in shot_dict:
+        LOGGER.warning('Impossible to retrieve sequence from shot!')
+        return None
+
+    shot = gazu.shot.get_sequence_from_shot(shot_dict)
+
+    if as_dict:
+        return shot
+
+    return kitsuclasses.KitsuSequence(shot)
