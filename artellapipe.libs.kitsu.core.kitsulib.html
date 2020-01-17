@@ -205,8 +205,18 @@
 <dt id="artellapipe.libs.kitsu.core.kitsulib.get_all_sequences">
 <code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">get_all_sequences</code><span class="sig-paren">(</span><em class="sig-param">project_id</em>, <em class="sig-param">as_dict=False</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.get_all_sequences" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns all sequences for the given project
+:param project_id: variant, str or dict
 :param as_dict: bool, Whether to return data as dict or as Kitsu class
 :return: list(dict) or list(KitsuSequence)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="artellapipe.libs.kitsu.core.kitsulib.get_all_shots">
+<code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">get_all_shots</code><span class="sig-paren">(</span><em class="sig-param">project_id</em>, <em class="sig-param">as_dict=False</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.get_all_shots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all shots for the given project
+:param project_id: variant, str or dict
+:param as_dict: bool, Whether to return data as dict or as Kitsu class
+:return: list(dict) or list(KitsuShot)</p>
 </dd></dl>
 
 <dl class="function">
@@ -222,6 +232,15 @@
 <code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">get_project_entity_types</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.get_project_entity_types" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns all entity types in the project
 :return: list</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="artellapipe.libs.kitsu.core.kitsulib.get_shot_sequence">
+<code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">get_shot_sequence</code><span class="sig-paren">(</span><em class="sig-param">shot_dict</em>, <em class="sig-param">as_dict=False</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.get_shot_sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns sequence given shot belongs to
+:param shot_dict:
+:param as_dict:  bool, Whether to return data as dict or as Kitsu class
+:return:</p>
 </dd></dl>
 
 <dl class="function">
