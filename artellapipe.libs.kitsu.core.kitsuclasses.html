@@ -187,6 +187,13 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuAsset.data">
+<em class="property">property </em><code class="sig-name descname">data</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuAsset.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns extra metadata attributes associated to this asset
+:return: dict</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuAsset.entity_type_id">
 <em class="property">property </em><code class="sig-name descname">entity_type_id</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuAsset.entity_type_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns asset entity type id
@@ -310,9 +317,23 @@
 <em class="property">class </em><code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsuclasses.</code><code class="sig-name descname">KitsuSequence</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuSequence" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuSequence.canceled">
+<em class="property">property </em><code class="sig-name descname">canceled</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuSequence.canceled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether the asset has been cancelled or not
+:return: bool</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuSequence.description">
 <em class="property">property </em><code class="sig-name descname">description</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuSequence.description" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns sequence description
+:return: str</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuSequence.entity_type_id">
+<em class="property">property </em><code class="sig-name descname">entity_type_id</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuSequence.entity_type_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns sequence entity type id
 :return: str</p>
 </dd></dl>
 
@@ -335,6 +356,89 @@
 <em class="property">property </em><code class="sig-name descname">number_of_frames</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuSequence.number_of_frames" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the number of frames of the shot
 :return: int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuSequence.preview_file_id">
+<em class="property">property </em><code class="sig-name descname">preview_file_id</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuSequence.preview_file_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns asset preview file id
+:return: str</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuSequence.type">
+<em class="property">property </em><code class="sig-name descname">type</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuSequence.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns sequence type
+:return: str</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuShot">
+<em class="property">class </em><code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsuclasses.</code><code class="sig-name descname">KitsuShot</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuShot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuShot.description">
+<em class="property">property </em><code class="sig-name descname">description</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuShot.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns shot description
+:return: str</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuShot.entity_type_id">
+<em class="property">property </em><code class="sig-name descname">entity_type_id</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuShot.entity_type_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns shot entity type id
+:return: str</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuShot.id">
+<em class="property">property </em><code class="sig-name descname">id</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuShot.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns shot ID
+:return: str</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuShot.name">
+<em class="property">property </em><code class="sig-name descname">name</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuShot.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the name of the shot
+:return: str</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuShot.number_of_frames">
+<em class="property">property </em><code class="sig-name descname">number_of_frames</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuShot.number_of_frames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of frames of the shot
+:return: int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuShot.parent_id">
+<em class="property">property </em><code class="sig-name descname">parent_id</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuShot.parent_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns shot parent ID (ID of the sequence this shot belongs to)
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuShot.preview_file_id">
+<em class="property">property </em><code class="sig-name descname">preview_file_id</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuShot.preview_file_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns shot preview file id
+:return: str</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuShot.to_dict">
+<code class="sig-name descname">to_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuShot.to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns dict data of the shot
+:return: dict</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuShot.type">
+<em class="property">property </em><code class="sig-name descname">type</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuShot.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns shot type
+:return: str</p>
 </dd></dl>
 
 </dd></dl>
