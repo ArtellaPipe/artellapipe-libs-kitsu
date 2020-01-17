@@ -12,6 +12,7 @@ __license__ = "MIT"
 __maintainer__ = "Tomas Poveda"
 __email__ = "tpovedatd@gmail.com"
 
+import os
 import logging
 
 from tpPyUtils import decorators
@@ -64,6 +65,13 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
     def user_data(self):
         return self._user_data
 
+    def needs_login(self):
+        """
+        Returns whether or not production trackign needs log to work or not
+        """
+
+        return True
+
     def reset_user_info(self):
         """
         Function that resets the information stored of the user
@@ -84,13 +92,21 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
         self._load_user_settings()
 
     def update_tracking_info(self):
-        print('Updating trackign info ...')
+        print('Updating tracking info ...')
 
     def is_tracking_available(self):
+        """
+        Returns whether tracking service is available or not
+        :return: bool
+        """
 
         return kitsulib.host_is_up()
 
     def login(self, *args, **kwargs):
+        """
+        Login into tracking service with given user and password
+        :return: bool
+        """
 
         email = kwargs.get('email', self._email)
         password = kwargs.get('password', self._password)
@@ -130,6 +146,12 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
             return False
 
     def logout(self, *args, **kwargs):
+        """
+        Logout from tracker service
+        :param args:
+        :param kwargs:
+        :return: bool
+        """
 
         if not self.is_logged():
             LOGGER.warning('Impossible to logout from Kitsu because you are not currently logged')
@@ -147,9 +169,15 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
 
         self._load_user_settings()
 
+        self.unlogged.emit()
+
         return True
 
     def all_project_assets(self):
+        """
+        Return all the assets information of the assets of the current project
+        :return: list
+        """
 
         if not self.is_logged():
             LOGGER.warning('Impossible to retrieve assets because user is not logged into Kitsu!')
@@ -167,7 +195,7 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
 
         kitsu_assets = kitsulib.all_assets_for_project(project_id=project_id)
         asset_types = self.update_entity_types_from_kitsu(force=False)
-        category_names = [asset_type.name for asset_type in asset_types]
+        # category_names = [asset_type.name for asset_type in asset_types]
 
         assets_data = list()
         for kitsu_asset in kitsu_assets:
@@ -176,18 +204,116 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
                 LOGGER.warning(
                     'Entity Type {} for Asset {} is not valid! Skipping ...'.format(entity_type, kitsu_asset.name))
                 continue
+
+            asset_id = kitsu_asset.id
+            custom_id_attr = kitsu_lib.config.get('custom_id_attribute', default=None)
+            if custom_id_attr:
+                asset_metadata = kitsu_asset.data or dict()
+                asset_id = asset_metadata.get(custom_id_attr, asset_id)
+
             assets_data.append(
                 {
                     'asset': kitsu_asset,
                     'name': kitsu_asset.name,
                     'thumb': kitsu_asset.preview_file_id,
-                    'category': entity_type.name
+                    'category': entity_type.name,
+                    'id': asset_id
                 }
             )
 
         return assets_data
 
+    def all_project_sequences(self):
+        """
+        Returns all the sequences of the current project
+        :return:
+        """
+
+        if not self.is_logged():
+            LOGGER.warning('Impossible to retrieve sequences because user is not logged into Kitsu!')
+            return
+
+        production_path = self._project.get_production_path()
+        if not production_path or not os.path.isdir(production_path):
+            LOGGER.warning(
+                'Impossible to retrieve sequences from invalid production path: "{}"'.format(production_path))
+            return
+
+        project_id = kitsu_lib.config.get('project_id', default=None)
+        if not project_id:
+            LOGGER.warning('Impossible to retrieve assets because does not defines a valid Kitsu ID')
+            return
+
+        kitsu_sequences = kitsulib.get_all_sequences(project_id=project_id)
+
+        sequences_data = list()
+        for kitsu_sequence in kitsu_sequences:
+            entity_type = self.get_entity_type_by_id(kitsu_sequence.entity_type_id)
+            if not entity_type:
+                LOGGER.warning(
+                    'Entity Type {} for Sequence {} is not valid! Skipping ...'.format(entity_type, kitsu_sequence.name))
+                continue
+            sequences_data.append(
+                {
+                    'sequence': kitsu_sequence,
+                    'name': kitsu_sequence.name,
+                    'thumb': kitsu_sequence.preview_file_id,
+                    'category': entity_type.name,
+                    'id': kitsu_sequence.id
+                }
+            )
+
+        return sequences_data
+
+    def all_project_shots(self):
+        """
+        Returns all the shots of the current project
+        :return:
+        """
+
+        if not self.is_logged():
+            LOGGER.warning('Impossible to retrieve sequences because user is not logged into Kitsu!')
+            return
+
+        production_path = self._project.get_production_path()
+        if not production_path or not os.path.isdir(production_path):
+            LOGGER.warning(
+                'Impossible to retrieve sequences from invalid production path: "{}"'.format(production_path))
+            return
+
+        project_id = kitsu_lib.config.get('project_id', default=None)
+        if not project_id:
+            LOGGER.warning('Impossible to retrieve assets because does not defines a valid Kitsu ID')
+            return
+
+        kitsu_shots = kitsulib.get_all_shots(project_id=project_id)
+
+        shots_data = list()
+        for kitsu_shot in kitsu_shots:
+            entity_type = self.get_entity_type_by_id(kitsu_shot.entity_type_id)
+            if not entity_type:
+                LOGGER.warning(
+                    'Entity Type {} for Shot {} is not valid! Skipping ...'.format(entity_type, kitsu_shot.name))
+                continue
+            shots_data.append(
+                {
+                    'shot': kitsu_shot,
+                    'name': kitsu_shot.name,
+                    'thumb': kitsu_shot.preview_file_id,
+                    'category': entity_type.name,
+                    'id': kitsu_shot.id,
+                    'sequence_name': kitsu_shot.parent_id
+                }
+            )
+
+        return shots_data
+
     def download_preview_file_thumbnail(self, preview_id, file_path):
+        """
+        Downloads given preview file thumbnail and save it at given location
+        :param preview_id:  str or dict, The preview file dict or ID.
+        :param file_path: str, Location on hard drive where to save the file.
+        """
 
         kitsulib.download_preview_file_thumbnail(preview_id=preview_id, file_path=file_path)
 
