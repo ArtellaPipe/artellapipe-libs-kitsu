@@ -251,7 +251,8 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
             entity_type = self.get_entity_type_by_id(kitsu_sequence.entity_type_id)
             if not entity_type:
                 LOGGER.warning(
-                    'Entity Type {} for Sequence {} is not valid! Skipping ...'.format(entity_type, kitsu_sequence.name))
+                    'Entity Type {} for Sequence {} is not valid! Skipping ...'.format(
+                        entity_type, kitsu_sequence.name))
                 continue
             sequences_data.append(
                 {
