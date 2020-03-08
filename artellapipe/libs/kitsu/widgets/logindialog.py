@@ -17,13 +17,14 @@ import logging
 from Qt.QtCore import *
 from Qt.QtWidgets import *
 
-from tpQtLib.core import qtutils
-from tpQtLib.widgets import formwidget, lightbox, stack
+import tpDcc
+from tpDcc.libs.qt.core import qtutils
+from tpDcc.libs.qt.widgets import formwidget, lightbox, stack
 
 import artellapipe
 from artellapipe.widgets import dialog
 from artellapipe.libs.kitsu.widgets import loginwidget
-from artellapipe.utils import resource, worker
+from artellapipe.utils import worker
 
 LOGGER = logging.getLogger()
 
@@ -45,7 +46,7 @@ class KitsuLoginForm(formwidget.FormDialog, object):
         self.accept_button().setText('Login')
         self.accept_button().setEnabled(False)
 
-        kitsu_pixmap = resource.ResourceManager().pixmap('kitsu', category='icons', theme='color')
+        kitsu_pixmap = tpDcc.ResourcesMgr().pixmap('kitsu', category='icons', theme='color')
         kitsu_icon = QLabel()
         kitsu_icon.setAlignment(Qt.AlignCenter)
         kitsu_icon.setPixmap(kitsu_pixmap)

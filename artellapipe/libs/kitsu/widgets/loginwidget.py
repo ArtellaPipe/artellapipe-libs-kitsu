@@ -15,9 +15,9 @@ __email__ = "tpovedatd@gmail.com"
 from Qt.QtCore import *
 from Qt.QtWidgets import *
 
-import artellapipe
+import tpDcc
+
 from artellapipe.widgets import spinner
-from artellapipe.utils import resource
 
 
 class KitsuLoginWidget(QFrame, object):
@@ -34,7 +34,7 @@ class KitsuLoginWidget(QFrame, object):
         main_layout.setSpacing(0)
         self.setLayout(main_layout)
 
-        kitsu_pixmap = resource.ResourceManager().pixmap('kitsu', category='icons', theme='color')
+        kitsu_pixmap = tpDcc.ResourcesMgr().pixmap('kitsu', category='icons', theme='color')
         kitsu_icon = QLabel()
         kitsu_icon.setAlignment(Qt.AlignCenter)
         kitsu_icon.setPixmap(kitsu_pixmap)

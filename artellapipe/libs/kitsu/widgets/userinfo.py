@@ -18,11 +18,11 @@ from Qt.QtCore import *
 from Qt.QtWidgets import *
 from Qt.QtGui import *
 
-from tpQtLib.core import qtutils
-from tpQtLib.widgets import balloon
+import tpDcc
+from tpDcc.libs.qt.core import qtutils
+from tpDcc.libs.qt.widgets import balloon
 
 import artellapipe
-from artellapipe.utils import resource
 from artellapipe.libs.kitsu.widgets import logindialog
 
 LOGGER = logging.getLogger()
@@ -67,9 +67,9 @@ class KitsuUserInfo(QFrame, object):
         self.setFrameShadow(QFrame.Raised)
         self.setLineWidth(1)
 
-        shutdown_icon = resource.ResourceManager().icon('shutdown')
-        self._kitsu_off_icon = resource.ResourceManager().icon('kitsu_off')
-        self._kitsu_on_icon = resource.ResourceManager().icon('kitsu_on')
+        shutdown_icon = tpDcc.ResourcesMgr().icon('shutdown')
+        self._kitsu_off_icon = tpDcc.ResourcesMgr().icon('kitsu_off')
+        self._kitsu_on_icon = tpDcc.ResourcesMgr().icon('kitsu_on')
 
         self._kitsu_btn = QPushButton('Kitsu')
         self._kitsu_btn.setIconSize(QSize(50, 50))
