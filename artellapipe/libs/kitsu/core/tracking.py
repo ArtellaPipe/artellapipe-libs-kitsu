@@ -15,8 +15,8 @@ __email__ = "tpovedatd@gmail.com"
 import os
 import logging
 
-from tpPyUtils import decorators
-from tpQtLib.core import qtutils
+from tpDcc.libs.python import decorators
+from tpDcc.libs.qt.core import qtutils
 
 import artellapipe.register
 from artellapipe.managers import tracking
@@ -35,6 +35,7 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
         self._password = None
         self._store_credentials = False
         self._user_data = dict()
+        self._shots_data = dict()
         self._entity_types = list()
 
     @property
@@ -65,6 +66,14 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
     def user_data(self):
         return self._user_data
 
+    def get_name(self):
+        """
+        Returns the name of the production tracker system
+        :return: str
+        """
+
+        return 'Kitsu'
+
     def needs_login(self):
         """
         Returns whether or not production trackign needs log to work or not
@@ -91,9 +100,6 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
         tracking.TrackingManager.set_project(self, project)
         self._load_user_settings()
 
-    def update_tracking_info(self):
-        print('Updating tracking info ...')
-
     def is_tracking_available(self):
         """
         Returns whether tracking service is available or not
@@ -116,14 +122,14 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
             LOGGER.warning('Impossible to login into Kitsu because username or password are not valid!')
             return False
 
-        gazup_api = kitsu_lib.config.get('gazu_api', default=None)
-        if not gazup_api:
+        gazu_api = kitsu_lib.config.get('gazu_api', default=None)
+        if not gazu_api:
             LOGGER.warning('Impossible to login into Kitsu because Gazu API is not available!')
             return False
 
-        kitsulib.set_host(gazup_api)
+        kitsulib.set_host(gazu_api)
         if not kitsulib.host_is_up():
-            LOGGER.warning('Impossible to login into Kitsu because Gazu API is not available: "{}"'.format(gazup_api))
+            LOGGER.warning('Impossible to login into Kitsu because Gazu API is not available: "{}"'.format(gazu_api))
             qtutils.show_warning(
                 None, 'Kitsu server is down!',
                 'Was not possible to retrieve Gazu API. '
@@ -173,6 +179,72 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
 
         return True
 
+    @decorators.abstractmethod
+    def get_user_name(self):
+        """
+        Returns the name of the current logged user
+        :return: str
+        """
+
+        if not self.is_logged():
+            return 'Unknown'
+
+        return kitsulib.get_current_user().full_name
+
+    def download_preview_file_thumbnail(self, preview_id, file_path):
+        """
+        Downloads given preview file thumbnail and save it at given location
+        :param preview_id:  str or dict, The preview file dict or ID.
+        :param file_path: str, Location on hard drive where to save the file.
+        """
+
+        kitsulib.download_preview_file_thumbnail(preview_id=preview_id, file_path=file_path)
+
+    def get_project_name(self):
+        """
+        Returns name of the project
+        :return: str
+        """
+
+        project_id = kitsu_lib.config.get('project_id', default=None)
+        if not project_id:
+            LOGGER.warning('Impossible to retrieve assets because does not defines a valid Kitsu ID')
+            return
+
+        kitsu_project = kitsulib.get_project(project_id)
+
+        return kitsu_project.name
+
+    def get_project_fps(self):
+        """
+        Returns FPS (frames per second) used in the project
+        :return: int
+        """
+
+        project_id = kitsu_lib.config.get('project_id', default=None)
+        if not project_id:
+            LOGGER.warning('Impossible to retrieve assets because does not defines a valid Kitsu ID')
+            return
+
+        kitsu_project = kitsulib.get_project(project_id)
+
+        return kitsu_project.fps
+
+    def get_project_resolution(self):
+        """
+        Returns resolution used in the project
+        :return: str
+        """
+
+        project_id = kitsu_lib.config.get('project_id', default=None)
+        if not project_id:
+            LOGGER.warning('Impossible to retrieve assets because does not defines a valid Kitsu ID')
+            return
+
+        kitsu_project = kitsulib.get_project(project_id)
+
+        return kitsu_project.resolution
+
     def all_project_assets(self):
         """
         Return all the assets information of the assets of the current project
@@ -194,7 +266,7 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
             return
 
         kitsu_assets = kitsulib.all_assets_for_project(project_id=project_id)
-        asset_types = self.update_entity_types_from_kitsu(force=False)
+        # asset_types = self.update_entity_types_from_kitsu(force=False)
         # category_names = [asset_type.name for asset_type in asset_types]
 
         assets_data = list()
@@ -204,22 +276,10 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
                 LOGGER.warning(
                     'Entity Type {} for Asset {} is not valid! Skipping ...'.format(entity_type, kitsu_asset.name))
                 continue
+            asset_data = kitsu_asset.get_data()
+            asset_data['category'] = entity_type.name
 
-            asset_id = kitsu_asset.id
-            custom_id_attr = kitsu_lib.config.get('custom_id_attribute', default=None)
-            if custom_id_attr:
-                asset_metadata = kitsu_asset.data or dict()
-                asset_id = asset_metadata.get(custom_id_attr, asset_id)
-
-            assets_data.append(
-                {
-                    'asset': kitsu_asset,
-                    'name': kitsu_asset.name,
-                    'thumb': kitsu_asset.preview_file_id,
-                    'category': entity_type.name,
-                    'id': asset_id
-                }
-            )
+            assets_data.append(asset_data)
 
         return assets_data
 
@@ -309,14 +369,75 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
 
         return shots_data
 
-    def download_preview_file_thumbnail(self, preview_id, file_path):
+    def all_assets_in_shot(self, shot_id, force_update=False):
         """
-        Downloads given preview file thumbnail and save it at given location
-        :param preview_id:  str or dict, The preview file dict or ID.
-        :param file_path: str, Location on hard drive where to save the file.
+        Returns all assets in the given shot
+        :param shot_id
+        :return: list
         """
 
-        kitsulib.download_preview_file_thumbnail(preview_id=preview_id, file_path=file_path)
+        if shot_id in self._shots_data and self._shots_data[shot_id] and not force_update:
+            if 'assets' in self._shots_data[shot_id]:
+                return self._shots_data[shot_id]['assets']
+
+        kitsu_assets = kitsulib.get_all_assets_in_shot(shot_id=shot_id)
+
+        assets_data = list()
+        for kitsu_asset in kitsu_assets:
+            entity_type = self.get_entity_type_by_id(kitsu_asset.entity_type_id)
+            if not entity_type:
+                LOGGER.warning(
+                    'Entity Type {} for Asset {} is not valid! Skipping ...'.format(entity_type, kitsu_asset.name))
+                continue
+            asset_data = kitsu_asset.get_data()
+            asset_data['category'] = entity_type.name
+
+            assets_data.append(asset_data)
+
+        if shot_id not in self._shots_data:
+            self._shots_data[shot_id] = dict()
+
+        self._shots_data[shot_id]['assets'] = asset_data
+
+        return assets_data
+
+    def get_occurrences_of_asset_in_shot(self, shot_id, asset_name, force_update=False):
+        """
+        Returns the number of occurrences of an asset in given shot
+        :param force_update: bool
+        :return:
+        """
+
+        casting = self.casting_in_shot(shot_id, force_update=force_update)
+        for casting_item in casting:
+            if casting_item['asset_name'] == asset_name:
+                return casting_item['nb_occurences']
+
+        return 0
+
+    def casting_in_shot(self, shot, force_update=False):
+        """
+        Returns asset casting for given shot (breakdown)
+        :param shot:
+        :return:
+        """
+
+        if shot in self._shots_data and self._shots_data[shot] and not force_update:
+            if 'casting' in self._shots_data[shot]:
+                return self._shots_data[shot]['casting']
+
+        project_id = kitsu_lib.config.get('project_id', default=None)
+        if not project_id:
+            LOGGER.warning('Impossible to retrieve assets because does not defines a valid Kitsu ID')
+            return
+
+        casting = kitsulib.get_shot_casting(project_id=project_id, shot_id=shot)
+        if shot not in self._shots_data:
+            self._shots_data[shot] = dict()
+
+        self._shots_data[shot]['casting'] = casting
+
+        return casting
 
     def update_entity_types_from_kitsu(self, force=False):
         """
@@ -356,6 +477,74 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
                 return entity_type
 
         return ''
+
+    def get_tasks_in_shot(self, shot_id):
+        """
+        Returns all tasks in given shot
+        :param shot_id: str
+        :return: list
+        """
+
+        if not self.is_logged():
+            return list()
+
+        return kitsulib.get_all_tasks_for_shot(shot_id=shot_id)
+
+    def upload_shot_task_preview(self, task_id, preview_file_path, comment=''):
+        """
+        Uploads task preview file to the tracker server
+        :param task_id: str, ID of task to submit preview file into
+        :param preview_file_path: str, file path of the preview file to upload
+        :param comment: str, comment to link to the task with given preview
+        :return: bool
+        """
+
+        if not self.is_logged():
+            return False
+
+        if not preview_file_path or not os.path.isfile(preview_file_path):
+            LOGGER.warning('Given preview file "{}" does not exists!'.format(preview_file_path))
+            return False
+
+        return kitsulib.upload_shot_task_preview(task_id, preview_file_path, comment)
+
+    def all_task_types(self):
+        """
+        Returns all task types
+        :return: list
+        """
+
+        return kitsulib.get_all_task_types()
+
+    def all_task_types_for_assets(self):
+        """
+        Returns all task types for assets
+        :return:
+        """
+
+        asset_task_types = list()
+        all_task_types = self.all_task_types() or list()
+        for task_type in all_task_types:
+            if not task_type.for_entity == 'Asset' or task_type.for_shots:
+                continue
+            asset_task_types.append(task_type.name)
+
+        return asset_task_types
+
+    def all_task_types_for_shots(self):
+        """
+        Returns all task types for assets
+        :return:
+        """
+
+        shot_task_types = list()
+        all_task_types = self.all_task_types() or list()
+        for task_type in all_task_types:
+            if not task_type.for_shots:
+                continue
+            shot_task_types.append(task_type.name)
+
+        return shot_task_types
 
     def _load_user_settings(self):
         """

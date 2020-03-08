@@ -13,6 +13,7 @@ __maintainer__ = "Tomas Poveda"
 __email__ = "tpovedatd@gmail.com"
 
 import logging
+import traceback
 
 import gazu
 
@@ -36,7 +37,12 @@ def host_is_up():
     :return: bool
     """
 
-    return gazu.client.host_is_up()
+    try:
+        return gazu.client.host_is_up()
+    except Exception as exc:
+        LOGGER.warning('Kitsu server is not available: {} | {}'.format(exc, traceback.format_exc()))
+
+    return False
 
 
 def log_in(email, password):
@@ -51,6 +57,23 @@ def log_in(email, password):
         return False
 
     return gazu.log_in(email, password)
+
+
+def get_project(project_id, as_dict=False):
+    """
+    Returns project with the given ID
+    :param project_id: str
+    :return: dict or KitsuProject
+    """
+
+    kitsu_project = gazu.project.get_project(project_id)
+    if not kitsu_project:
+        return None
+
+    if as_dict:
+        return kitsu_project
+
+    return kitsuclasses.KitsuProject(kitsu_project)
 
 
 def get_current_user(as_dict=False):
@@ -181,3 +204,114 @@ def get_shot_sequence(shot_dict, as_dict=False):
         return shot
 
     return kitsuclasses.KitsuSequence(shot)
+
+
+def get_all_assets_in_shot(shot_id, as_dict=False):
+    """
+    Returns all assets in given shot (defined in breakdown)
+    :param shot_id: str
+    :param as_dict: bool
+    :return:
+    """
+
+    shot_assets = gazu.asset.all_assets_for_shot(shot_id)
+
+    if as_dict:
+        return shot_assets
+
+    return [kitsuclasses.KitsuAsset(asset) for asset in shot_assets]
+
+
+def get_shot_casting(project_id, shot_id):
+    """
+    Returns casting (breakdown data) of the given shot
+    :param shot_id: str
+    :return: dict
+    """
+
+    cast_dict = {
+        'project_id': project_id,
+        'id': shot_id
+    }
+
+    return gazu.casting.get_shot_casting(cast_dict)
+
+
+def get_task(task_id, as_dict):
+    """
+    Returns task with given id in current project
+    :param task_id: str
+    :param as_dict: bool
+    :return: dict or KitsuTask
+    """
+
+    kitsu_task = gazu.task.get_task(task_id)
+    if as_dict:
+        return kitsu_task
+
+    return kitsuclasses.KitsuTask(kitsu_task)
+
+
+def get_all_tasks_for_shot(shot_id, as_dict=False):
+    """
+    Returns all tasks in given shot
+    :param shot_id: str
+    :param as_dict: bool
+    :return:
+    """
+
+    all_tasks = gazu.task.all_tasks_for_shot(shot_id)
+
+    if as_dict:
+        return all_tasks
+
+    return [kitsuclasses.KitsuTask(task) for task in all_tasks]
+
+
+def get_all_task_types(as_dict=False):
+    """
+    Returns all task types in current project
+    :param as_dict: dict
+    :return: list
+    """
+
+    all_task_types = gazu.task.all_task_types()
+
+    if as_dict:
+        return all_task_types
+
+    return [kitsuclasses.KitsuTaskType(task_type) for task_type in all_task_types]
+
+
+def get_task_status(task_id, as_dict=False):
+    """
+    Returns status of the given task id
+    :param task_id: str
+    :param as_dict: bool
+    :return: dict or KitsuTaskStatus
+    """
+
+    kitsu_task = get_task(task_id, as_dict=True)
+    if not kitsu_task:
+        return
+
+    task_status = gazu.task.get_task_status(kitsu_task)
+    if as_dict:
+        return task_status
+
+    return kitsuclasses.KitsuTaskStatus(task_status)
+
+
+def upload_shot_task_preview(task_id, preview_file_path, comment):
+    """
+    Uploads shot task to Kitsu server
+    :param task_id: st
+    :param preview_file_path: str
+    :param comment: str
+    :return:
+    """
+
+    if not comment:
+        comment = {'id': ''}
+
+    return gazu.task.add_preview(task_id, comment, preview_file_path)
