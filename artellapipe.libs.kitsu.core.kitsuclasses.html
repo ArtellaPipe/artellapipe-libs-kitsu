@@ -174,7 +174,7 @@
             
   <div class="section" id="module-artellapipe.libs.kitsu.core.kitsuclasses">
 <span id="artellapipe-libs-kitsu-core-kitsuclasses-module"></span><h1>artellapipe.libs.kitsu.core.kitsuclasses module<a class="headerlink" href="#module-artellapipe.libs.kitsu.core.kitsuclasses" title="Permalink to this headline">¶</a></h1>
-<p>Module that contains implementation for Kitsu data objets to work with a more OO approach</p>
+<p>Module that contains implementation for Kitsu data objects to work with a more OO approach</p>
 <dl class="class">
 <dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuAsset">
 <em class="property">class </em><code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsuclasses.</code><code class="sig-name descname">KitsuAsset</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuAsset" title="Permalink to this definition">¶</a></dt>
@@ -198,6 +198,13 @@
 <em class="property">property </em><code class="sig-name descname">entity_type_id</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuAsset.entity_type_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns asset entity type id
 :return: str</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuAsset.get_data">
+<code class="sig-name descname">get_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuAsset.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns data of the asset
+:return: dict</p>
 </dd></dl>
 
 <dl class="method">
@@ -272,6 +279,27 @@
 </dd></dl>
 
 <dl class="class">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuComment">
+<em class="property">class </em><code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsuclasses.</code><code class="sig-name descname">KitsuComment</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuComment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuComment.id">
+<em class="property">property </em><code class="sig-name descname">id</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuComment.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuComment.text">
+<em class="property">property </em><code class="sig-name descname">text</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuComment.text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuComment.type">
+<em class="property">property </em><code class="sig-name descname">type</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuComment.type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuEntityType">
 <em class="property">class </em><code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsuclasses.</code><code class="sig-name descname">KitsuEntityType</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuEntityType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
@@ -309,6 +337,32 @@
 <dd><p>Returns last update date of the entity type
 :return: str</p>
 </dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuProject">
+<em class="property">class </em><code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsuclasses.</code><code class="sig-name descname">KitsuProject</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuProject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuProject.fps">
+<em class="property">property </em><code class="sig-name descname">fps</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuProject.fps" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuProject.id">
+<em class="property">property </em><code class="sig-name descname">id</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuProject.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuProject.name">
+<em class="property">property </em><code class="sig-name descname">name</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuProject.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuProject.resolution">
+<em class="property">property </em><code class="sig-name descname">resolution</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuProject.resolution" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -440,6 +494,80 @@
 <dd><p>Returns shot type
 :return: str</p>
 </dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuTask">
+<em class="property">class </em><code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsuclasses.</code><code class="sig-name descname">KitsuTask</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuTask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuTask.description">
+<em class="property">property </em><code class="sig-name descname">description</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuTask.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns description of the task
+:return: str</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuTask.id">
+<em class="property">property </em><code class="sig-name descname">id</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuTask.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns ID of the task
+:return: str</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuTask.name">
+<em class="property">property </em><code class="sig-name descname">name</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuTask.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the name of the task
+:return: str</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuTaskStatus">
+<em class="property">class </em><code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsuclasses.</code><code class="sig-name descname">KitsuTaskStatus</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuTaskStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuTaskStatus.id">
+<em class="property">property </em><code class="sig-name descname">id</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuTaskStatus.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuTaskStatus.name">
+<em class="property">property </em><code class="sig-name descname">name</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuTaskStatus.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuTaskStatus.short_name">
+<em class="property">property </em><code class="sig-name descname">short_name</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuTaskStatus.short_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuTaskType">
+<em class="property">class </em><code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsuclasses.</code><code class="sig-name descname">KitsuTaskType</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuTaskType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuTaskType.for_entity">
+<em class="property">property </em><code class="sig-name descname">for_entity</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuTaskType.for_entity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuTaskType.for_shots">
+<em class="property">property </em><code class="sig-name descname">for_shots</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuTaskType.for_shots" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuTaskType.id">
+<em class="property">property </em><code class="sig-name descname">id</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuTaskType.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="artellapipe.libs.kitsu.core.kitsuclasses.KitsuTaskType.name">
+<em class="property">property </em><code class="sig-name descname">name</code><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsuclasses.KitsuTaskType.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 

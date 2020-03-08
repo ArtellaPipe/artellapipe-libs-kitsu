@@ -202,6 +202,15 @@
 </dd></dl>
 
 <dl class="function">
+<dt id="artellapipe.libs.kitsu.core.kitsulib.get_all_assets_in_shot">
+<code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">get_all_assets_in_shot</code><span class="sig-paren">(</span><em class="sig-param">shot_id</em>, <em class="sig-param">as_dict=False</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.get_all_assets_in_shot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all assets in given shot (defined in breakdown)
+:param shot_id: str
+:param as_dict: bool
+:return:</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="artellapipe.libs.kitsu.core.kitsulib.get_all_sequences">
 <code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">get_all_sequences</code><span class="sig-paren">(</span><em class="sig-param">project_id</em>, <em class="sig-param">as_dict=False</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.get_all_sequences" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns all sequences for the given project
@@ -220,11 +229,36 @@
 </dd></dl>
 
 <dl class="function">
+<dt id="artellapipe.libs.kitsu.core.kitsulib.get_all_task_types">
+<code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">get_all_task_types</code><span class="sig-paren">(</span><em class="sig-param">as_dict=False</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.get_all_task_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all task types in current project
+:param as_dict: dict
+:return: list</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="artellapipe.libs.kitsu.core.kitsulib.get_all_tasks_for_shot">
+<code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">get_all_tasks_for_shot</code><span class="sig-paren">(</span><em class="sig-param">shot_id</em>, <em class="sig-param">as_dict=False</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.get_all_tasks_for_shot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all tasks in given shot
+:param shot_id: str
+:param as_dict: bool
+:return:</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="artellapipe.libs.kitsu.core.kitsulib.get_current_user">
 <code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">get_current_user</code><span class="sig-paren">(</span><em class="sig-param">as_dict=False</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.get_current_user" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns user database information for user linked to auth tokens
 :param as_dict: bool
 :return: variant, dict or KitsuUserInfo</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="artellapipe.libs.kitsu.core.kitsulib.get_project">
+<code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">get_project</code><span class="sig-paren">(</span><em class="sig-param">project_id</em>, <em class="sig-param">as_dict=False</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.get_project" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns project with the given ID
+:param project_id: str
+:return: dict or KitsuProject</p>
 </dd></dl>
 
 <dl class="function">
@@ -235,12 +269,38 @@
 </dd></dl>
 
 <dl class="function">
+<dt id="artellapipe.libs.kitsu.core.kitsulib.get_shot_casting">
+<code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">get_shot_casting</code><span class="sig-paren">(</span><em class="sig-param">project_id</em>, <em class="sig-param">shot_id</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.get_shot_casting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns casting (breakdown data) of the given shot
+:param shot_id: str
+:return: dict</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="artellapipe.libs.kitsu.core.kitsulib.get_shot_sequence">
 <code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">get_shot_sequence</code><span class="sig-paren">(</span><em class="sig-param">shot_dict</em>, <em class="sig-param">as_dict=False</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.get_shot_sequence" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns sequence given shot belongs to
 :param shot_dict:
 :param as_dict:  bool, Whether to return data as dict or as Kitsu class
 :return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="artellapipe.libs.kitsu.core.kitsulib.get_task">
+<code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">get_task</code><span class="sig-paren">(</span><em class="sig-param">task_id</em>, <em class="sig-param">as_dict</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.get_task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns task with given id in current project
+:param task_id: str
+:param as_dict: bool
+:return: dict or KitsuTask</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="artellapipe.libs.kitsu.core.kitsulib.get_task_status">
+<code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">get_task_status</code><span class="sig-paren">(</span><em class="sig-param">task_id</em>, <em class="sig-param">as_dict=False</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.get_task_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns status of the given task id
+:param task_id: str
+:param as_dict: bool
+:return: dict or KitsuTaskStatus</p>
 </dd></dl>
 
 <dl class="function">
@@ -264,6 +324,16 @@
 <code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">set_host</code><span class="sig-paren">(</span><em class="sig-param">new_host</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.set_host" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets current configured host on which requests are sent
 :param new_host: variant, str or None</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="artellapipe.libs.kitsu.core.kitsulib.upload_shot_task_preview">
+<code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">upload_shot_task_preview</code><span class="sig-paren">(</span><em class="sig-param">task_id</em>, <em class="sig-param">preview_file_path</em>, <em class="sig-param">comment</em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.upload_shot_task_preview" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uploads shot task to Kitsu server
+:param task_id: st
+:param preview_file_path: str
+:param comment: str
+:return:</p>
 </dd></dl>
 
 </div>
