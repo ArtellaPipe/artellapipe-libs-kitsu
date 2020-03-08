@@ -6,6 +6,6 @@ pytest-cov
 coveralls
 sphinx
 sphinx_rtd_theme
-tpPyUtils
+tpDcc-libs-python
 gazu
 artellapipe
