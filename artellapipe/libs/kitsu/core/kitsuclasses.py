@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Module that contains implementation for Kitsu data objets to work with a more OO approach
+Module that contains implementation for Kitsu data objects to work with a more OO approach
 """
 
 from __future__ import print_function, division, absolute_import
@@ -11,6 +11,51 @@ __author__ = "Tomas Poveda"
 __license__ = "MIT"
 __maintainer__ = "Tomas Poveda"
 __email__ = "tpovedatd@gmail.com"
+
+import artellapipe.libs.kitsu as kitsu_lib
+
+
+class KitsuProject(object):
+    def __init__(self, data):
+        super(KitsuProject, self).__init__()
+
+        self._dict = data
+        self._id = data.get('id', None)
+        self._name = data.get('name', None)
+        self._created_at = data.get('created_at', None)
+        self._data = data.get('data', None)
+        self._end_date = data.get('end_date', None)
+        self._file_tree = data.get('file_tree', None)
+        self._fps = data.get('fps', 24)
+        self._file_tree = data.get('file_tree', None)
+        self._has_avatar = data.get('has_avatar', False)
+        self._man_days = data.get('man_days', None)
+        self._production_type = data.get('production_type', None)
+        self._project_status_id = data.get('project_status_id', None)
+        self._project_status_name = data.get('project_status_name', None)
+        self._ratio = data.get('ratio', None)
+        self._resolution = data.get('resolution', None)
+        self._shotgun_id = data.get('shotgun_id', None)
+        self._start_date = data.get('start_date', None)
+        self._team = data.get('team', list())
+        self._type = data.get('type', None)
+        self._updated_at = data.get('updated_at', None)
+
+    @property
+    def name(self):
+        return self._name
+
+    @property
+    def id(self):
+        return self._id
+
+    @property
+    def fps(self):
+        return self._fps
+
+    @property
+    def resolution(self):
+        return self._resolution
 
 
 class KitsuUserInfo(object):
@@ -191,6 +236,25 @@ class KitsuAsset(object):
         """
 
         return self._canceled
+
+    def get_data(self):
+        """
+        Returns data of the asset
+        :return: dict
+        """
+
+        asset_id = self.id
+        custom_id_attr = kitsu_lib.config.get('custom_id_attribute', default=None)
+        if custom_id_attr:
+            asset_metadata = self.data or dict()
+            asset_id = asset_metadata.get(custom_id_attr, asset_id)
+
+        return {
+            'asset': self,
+            'name': self.name,
+            'thumb': self.preview_file_id,
+            'id': asset_id
+        }
 
 
 class KitsuAssetType(object):
@@ -510,3 +574,169 @@ class KitsuShot(object):
         """
 
         return self._dict
+
+
+class KitsuTaskType(object):
+    def __init__(self, data):
+        super(KitsuTaskType, self).__init__()
+
+        self._dict = data
+
+        self._id = data.get('id', None)
+        self._name = data.get('name', None)
+        self._short_name = data.get('short_name', None)
+        self._type = data.get('type', None)
+        self._color = data.get('color', None)
+        self._created_at = data.get('created_at', None)
+        self._department_id = data.get('department_id', None)
+        self._for_entity = data.get('for_entity', None)
+        self._for_shots = data.get('for_shots', True)
+        self._priority = data.get('priority', 0)
+        self._update_at = data.get('updated_at', None)
+        self._allow_timelog = data.get('allow_timelog', False)
+
+    @property
+    def id(self):
+        return self._id
+
+    @property
+    def name(self):
+        return self._name
+
+    @property
+    def for_shots(self):
+        return self._for_shots
+
+    @property
+    def for_entity(self):
+        return self._for_entity
+
+
+class KitsuTaskStatus(object):
+    def __init__(self, data):
+        super(KitsuTaskStatus, self).__init__()
+
+        self._dict = data
+
+        self._id = data.get('id', None)
+        self._name = data.get('name', None)
+        self._short_name = data.get('short_name', None)
+        self._type = data.get('type', None)
+        self._create_at = data.get('created_at', None)
+        self._is_artist_allowed = data.get('is_artist_allowed', False)
+        self._is_client_allowed = data.get('is_client_allowed', False)
+        self._is_done = data.get('is_done', False)
+        self._is_retake = data.get('is_retake', False)
+        self._is_reviewable = data.get('is_reviewable', False)
+        self._shotgun_id = data.get('shotgun_id', None)
+        self._updated_at = data.get('updated_at', None)
+
+    @property
+    def id(self):
+        return self._id
+
+    @property
+    def name(self):
+        return self._name
+
+    @property
+    def short_name(self):
+        return self._short_name
+
+
+class KitsuTask(object):
+    def __init__(self, data):
+        super(KitsuTask, self).__init__()
+
+        self._dict = data
+
+        self._id = data.get('id', None)
+        self._assigner_id = data.get('assigner_id', None)
+        self._completion_rate = data.get('completion_rate', 0)
+        self._data = data.get('data', None)
+        self._description = data.get('description', None)
+        self._due_date = data.get('due_date', None)
+        self._duration = data.get('duration', 0)
+        self._end_data = data.get('end_date', None)
+        self._entity_id = data.get('entity_id', None)
+        self._entity_name = data.get('entity_name', None)
+        self._entity_type_name = data.get('entity_type_name', None)
+        self._estimation = data.get('estimation', 0)
+        self._last_comment_date = data.get('last_comment_date', None)
+        self._name = data.get('name', None)
+        self._priority = data.get('priority', 0)
+        self._project_id = data.get('project_id', None)
+        self._project_name = data.get('project_name', None)
+        self._real_start_date = data.get('real_start_date', None)
+        self._retake_count = data.get('retake_count', 0)
+        self._sort_order = data.get('sort_order', 0)
+        self._start_date = data.get('start_date', None)
+        self._task_status_id = data.get('task_status_id', None)
+        self._task_type_id = data.get('task_type_id', None)
+        self._task_type_name = data.get('task_type_name', None)
+        self._type = data.get('type', None)
+        self._updated_at = data.get('updated_at', None)
+
+    @property
+    def id(self):
+        """
+        Returns ID of the task
+        :return: str
+        """
+
+        return self._id
+
+    @property
+    def name(self):
+        """
+        Returns the name of the task
+        :return: str
+        """
+
+        return self._task_type_name
+
+    @property
+    def description(self):
+        """
+        Returns description of the task
+        :return: str
+        """
+
+        return self._description
+
+
+class KitsuComment(object):
+    def __init__(self, data):
+        super(KitsuComment, self).__init__()
+
+        self._dict = data
+
+        self._id = data.get('id', None)
+        self._type = data.get('type', None)
+        self._text = data.get('text', '')
+        self._created_at = data.get('created_at', None)
+        self._data = data.get('data', None)
+        self._mentions = data.get('mentions', list())
+        self._object_id = data.get('object_id', None)
+        self._object_type = data.get('object_type', None)
+        self._person = data.get('person', None)
+        self._person_id = data.get('person_id', None)
+        self._pinned = data.get('pinned', None)
+        self._preview_file_id = data.get('preview_file_id', None)
+        self._previews = data.get('previews', list())
+        self._shotgun_id = data.get('shotgun_id', None)
+        self._task_status = data.get('task_status', None)
+        self._task_status_id = data.get('task_status_id', None)
+        self._updated_at = data.get('updated_at', None)
+
+    @property
+    def id(self):
+        return self._id
+
+    @property
+    def type(self):
+        return self._type
+
+    @property
+    def text(self):
+        return self._text
