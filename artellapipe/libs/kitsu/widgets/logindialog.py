@@ -18,11 +18,10 @@ from Qt.QtCore import *
 from Qt.QtWidgets import *
 
 import tpDcc
-from tpDcc.libs.qt.core import qtutils
+from tpDcc.libs.qt.core import qtutils, base
 from tpDcc.libs.qt.widgets import formwidget, lightbox, stack
 
 import artellapipe
-from artellapipe.widgets import dialog
 from artellapipe.libs.kitsu.widgets import loginwidget
 from artellapipe.utils import worker
 
@@ -124,20 +123,15 @@ class KitsuLoginForm(formwidget.FormDialog, object):
         self._accept_btn.setEnabled(not self._form_widget.has_errors() and self._valid_fields)
 
 
-class KitsuLoginDialog(dialog.ArtellaDialog, object):
+class KitsuLoginDialog(base.BaseWidget, object):
 
     validLogin = Signal()
     invalidLogin = Signal()
+    canceledLogin = Signal()
 
     def __init__(self, project, parent=None):
-        super(KitsuLoginDialog, self).__init__(
-            name='KitsuLoginDialog',
-            title='Kitsu - Login Dialog',
-            parent=parent,
-            size=(400, 400),
-            fixed_size=True,
-            project=project
-        )
+        self._project = project
+        super(KitsuLoginDialog, self).__init__(parent=parent)
 
         self._kitsu_worker = worker.Worker(app=QApplication.instance())
         self._kitsu_worker.workCompleted.connect(self._on_kitsu_worker_completed)
@@ -146,10 +140,6 @@ class KitsuLoginDialog(dialog.ArtellaDialog, object):
 
     def ui(self):
         super(KitsuLoginDialog, self).ui()
-
-        self._dragger._button_closed.setVisible(False)
-        self._dragger.setVisible(False)
-        self.logo_view.setVisible(False)
 
         self._main_stack = stack.SlidingStackedWidget(parent=self)
 
@@ -165,10 +155,12 @@ class KitsuLoginDialog(dialog.ArtellaDialog, object):
 
         self._lightbox.closed.connect(self.close)
 
+        self.main_layout.addWidget(self._main_stack)
+
     def setup_signals(self):
         self._main_stack.animFinished.connect(self._on_stack_anim_finished)
         self._login_widget.loginAccepted.connect(self._on_kitsu_login_accepted)
-        self._login_widget.loginCancelled.connect(self.close)
+        self._login_widget.loginCancelled.connect(self._on_kitsu_login_cancelled)
 
     def _create_login_form(self):
         """
@@ -234,6 +226,14 @@ class KitsuLoginDialog(dialog.ArtellaDialog, object):
 
         index = self._main_stack.indexOf(self._kitsu_waiter)
         self._main_stack.slide_in_index(index, force=True)
+
+    def _on_kitsu_login_cancelled(self):
+        """
+        Internal callback function that is called when the user cancels the login
+        """
+
+        self.close()
+        self.canceledLogin.emit()
 
     def _on_kitsu_worker_completed(self, uid, valid_login):
         """

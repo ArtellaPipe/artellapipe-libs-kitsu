@@ -255,11 +255,6 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
             LOGGER.warning('Impossible to retrieve assets because user is not logged into Kitsu!')
             return
 
-        assets_path = artellapipe.AssetsMgr().get_assets_path()
-        if not artellapipe.AssetsMgr().is_valid_assets_path():
-            LOGGER.warning('Impossible to retrieve assets from invalid assets path: "{}"'.format(assets_path))
-            return
-
         project_id = kitsu_lib.config.get('project_id', default=None)
         if not project_id:
             LOGGER.warning('Impossible to retrieve assets because does not defines a valid Kitsu ID')
@@ -291,12 +286,6 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
 
         if not self.is_logged():
             LOGGER.warning('Impossible to retrieve sequences because user is not logged into Kitsu!')
-            return
-
-        production_path = self._project.get_production_path()
-        if not production_path or not os.path.isdir(production_path):
-            LOGGER.warning(
-                'Impossible to retrieve sequences from invalid production path: "{}"'.format(production_path))
             return
 
         project_id = kitsu_lib.config.get('project_id', default=None)
@@ -334,12 +323,6 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
 
         if not self.is_logged():
             LOGGER.warning('Impossible to retrieve sequences because user is not logged into Kitsu!')
-            return
-
-        production_path = self._project.get_production_path()
-        if not production_path or not os.path.isdir(production_path):
-            LOGGER.warning(
-                'Impossible to retrieve sequences from invalid production path: "{}"'.format(production_path))
             return
 
         project_id = kitsu_lib.config.get('project_id', default=None)

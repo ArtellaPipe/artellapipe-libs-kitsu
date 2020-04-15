@@ -20,7 +20,7 @@ from Qt.QtGui import *
 
 import tpDcc
 from tpDcc.libs.qt.core import qtutils
-from tpDcc.libs.qt.widgets import balloon
+from tpDcc.libs.qt.widgets import balloon, panel
 
 import artellapipe
 from artellapipe.libs.kitsu.widgets import logindialog
@@ -49,10 +49,12 @@ class KitsuUserInfo(QFrame, object):
     login = Signal()
     logout = Signal()
 
-    def __init__(self, project, parent=None):
+    def __init__(self, project, window, parent=None):
         super(KitsuUserInfo, self).__init__(parent=parent)
 
         self._project = project
+        self._window = window
+        self._slider_panel = None
 
         self.ui()
 
@@ -137,22 +139,29 @@ class KitsuUserInfo(QFrame, object):
         """
 
         if artellapipe.Tracker().is_logged():
-            user_data = artellapipe.Tracker().user_data
-            self._ballon = KitsuUserBalloon(user_data=user_data)
-            rect_btn = self._kitsu_btn.geometry()
-            rect_balloon = self._ballon.geometry()
-            pos = QCursor.pos()
-            pos.setX(pos.x() - (self._kitsu_btn.width() / 2) - 20)
-            rect_balloon.setRect(
-                pos.x(), pos.y(), rect_btn.width(), rect_btn.height()
-            )
-            self._ballon.setGeometry(rect_balloon)
-            self._ballon.show()
+            pass
+        #     user_data = artellapipe.Tracker().user_data
+        #     self._ballon = KitsuUserBalloon(user_data=user_data)
+        #     rect_btn = self._kitsu_btn.geometry()
+        #     rect_balloon = self._ballon.geometry()
+        #     pos = QCursor.pos()
+        #     pos.setX(pos.x() - (self._kitsu_btn.width() / 2) - 20)
+        #     rect_balloon.setRect(
+        #         pos.x(), pos.y(), rect_btn.width(), rect_btn.height()
+        #     )
+        #     self._ballon.setGeometry(rect_balloon)
+        #     self._ballon.show()
         else:
-            login_dialog = logindialog.KitsuLoginDialog(project=self._project, parent=self.parent())
+            login_dialog = logindialog.KitsuLoginDialog(project=self._project, parent=self._window)
             login_dialog.validLogin.connect(self._on_kitsu_login)
-            # login_dialog.invalidLogin.connect(self._on_kitsu_logout)
-            login_dialog.exec_()
+            login_dialog.invalidLogin.connect(self._on_kitsu_logout)
+            login_dialog.canceledLogin.connect(self._on_kitsu_cancel)
+
+            self._slider_panel = panel.SliderPanel('Kitsu Login', parent=self._window)
+            self._slider_panel.position = 'right'
+            self._slider_panel.setFixedWidth(315)
+            self._slider_panel.set_widget(login_dialog)
+            self._slider_panel.show()
 
     def _on_kitsu_login(self):
         """
@@ -160,6 +169,8 @@ class KitsuUserInfo(QFrame, object):
         """
 
         self._kitsu_login()
+        self._slider_panel.close()
+        self._slider_panel = None
 
     def _on_kitsu_logout(self):
         """
@@ -178,3 +189,11 @@ class KitsuUserInfo(QFrame, object):
 
         self.update_kitsu_status()
         self.logout.emit()
+
+    def _on_kitsu_cancel(self):
+        """
+        Internal callback that is called when the user presses the Cancel button during login
+        """
+
+        self._slider_panel.close()
+        self._slider_panel = None
