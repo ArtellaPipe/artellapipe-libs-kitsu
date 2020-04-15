@@ -5,6 +5,7 @@ Submodules
 ----------
 
 .. toctree::
+   :maxdepth: 4
 
    artellapipe.libs.kitsu.core.kitsuclasses
    artellapipe.libs.kitsu.core.kitsulib
