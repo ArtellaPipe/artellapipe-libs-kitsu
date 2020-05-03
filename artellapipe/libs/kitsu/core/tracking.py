@@ -461,6 +461,15 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
 
         return ''
 
+    def get_task_by_id(self, task_id):
+        """
+        Returns task with the given ID
+        :param task_id: str
+        :return:
+        """
+
+        return kitsulib.get_task(task_id=task_id)
+
     def get_tasks_in_shot(self, shot_id):
         """
         Returns all tasks in given shot
@@ -473,12 +482,13 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
 
         return kitsulib.get_all_tasks_for_shot(shot_id=shot_id)
 
-    def upload_shot_task_preview(self, task_id, preview_file_path, comment=''):
+    def upload_shot_task_preview(self, task_id, preview_file_path, comment='', status=None):
         """
         Uploads task preview file to the tracker server
         :param task_id: str, ID of task to submit preview file into
         :param preview_file_path: str, file path of the preview file to upload
         :param comment: str, comment to link to the task with given preview
+        :param status: str, comment to link to the task with given preview
         :return: bool
         """
 
@@ -489,7 +499,7 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
             LOGGER.warning('Given preview file "{}" does not exists!'.format(preview_file_path))
             return False
 
-        return kitsulib.upload_shot_task_preview(task_id, preview_file_path, comment)
+        return kitsulib.upload_shot_task_preview(task_id, preview_file_path, comment, status=status)
 
     def all_task_types(self):
         """
@@ -498,6 +508,14 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
         """
 
         return kitsulib.get_all_task_types()
+
+    def all_task_statuses(self):
+        """
+        Returns all task statuses for current project
+        :return:
+        """
+
+        return kitsulib.get_all_task_statuses()
 
     def all_task_types_for_assets(self):
         """
@@ -528,6 +546,15 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
             shot_task_types.append(task_type.name)
 
         return shot_task_types
+
+    def get_task_status(self, task_id):
+        """
+        Returns the status of the given task name
+        :param task_id: str
+        :return:
+        """
+
+        return kitsulib.get_task_status(task_id)
 
     def _load_user_settings(self):
         """
