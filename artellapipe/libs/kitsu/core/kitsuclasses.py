@@ -621,8 +621,9 @@ class KitsuTaskStatus(object):
         self._id = data.get('id', None)
         self._name = data.get('name', None)
         self._short_name = data.get('short_name', None)
+        self._color = data.get('color', None)
         self._type = data.get('type', None)
-        self._create_at = data.get('created_at', None)
+        self._created_at = data.get('created_at', None)
         self._is_artist_allowed = data.get('is_artist_allowed', False)
         self._is_client_allowed = data.get('is_client_allowed', False)
         self._is_done = data.get('is_done', False)
@@ -642,6 +643,10 @@ class KitsuTaskStatus(object):
     @property
     def short_name(self):
         return self._short_name
+
+    @property
+    def color(self):
+        return self._color
 
 
 class KitsuTask(object):
@@ -703,6 +708,15 @@ class KitsuTask(object):
         """
 
         return self._description
+
+    @property
+    def task_status_id(self):
+        """
+        Returns the ID of the status task associated to this task
+        :return: str
+        """
+
+        return self._task_status_id
 
 
 class KitsuComment(object):

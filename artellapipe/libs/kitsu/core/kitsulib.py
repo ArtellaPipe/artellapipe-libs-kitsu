@@ -237,7 +237,7 @@ def get_shot_casting(project_id, shot_id):
     return gazu.casting.get_shot_casting(cast_dict)
 
 
-def get_task(task_id, as_dict):
+def get_task(task_id, as_dict=False):
     """
     Returns task with given id in current project
     :param task_id: str
@@ -271,8 +271,8 @@ def get_all_tasks_for_shot(shot_id, as_dict=False):
 def get_all_task_types(as_dict=False):
     """
     Returns all task types in current project
-    :param as_dict: dict
-    :return: list
+    :param as_dict: bool
+    :return: list or dict
     """
 
     all_task_types = gazu.task.all_task_types()
@@ -281,6 +281,21 @@ def get_all_task_types(as_dict=False):
         return all_task_types
 
     return [kitsuclasses.KitsuTaskType(task_type) for task_type in all_task_types]
+
+
+def get_all_task_statuses(as_dict=False):
+    """
+    Returns all task statuses in current project
+    :param as_dict: bool
+    :return: list
+    """
+
+    all_task_statuses = gazu.task.all_task_statuses()
+
+    if as_dict:
+        return all_task_statuses
+
+    return [kitsuclasses.KitsuTaskStatus(task_status) for task_status in all_task_statuses]
 
 
 def get_task_status(task_id, as_dict=False):
@@ -302,16 +317,45 @@ def get_task_status(task_id, as_dict=False):
     return kitsuclasses.KitsuTaskStatus(task_status)
 
 
-def upload_shot_task_preview(task_id, preview_file_path, comment):
+def add_comment_to_task(task_id, comment, status=None):
+    """
+    Adds comment to given task
+    :param task_id:
+    :param comment:
+    :param status:
+    :return:
+    """
+
+    task = get_task(task_id, as_dict=True)
+    if not task:
+        return
+
+    if not status:
+        status = gazu.task.get_task_status(task)
+    else:
+        status = gazu.task.get_task_status_by_name(status)
+    if not status:
+        return
+
+    return gazu.task.add_comment(task, status, comment)
+
+
+def upload_shot_task_preview(task_id, preview_file_path, comment, status=None):
     """
     Uploads shot task to Kitsu server
     :param task_id: st
     :param preview_file_path: str
     :param comment: str
+    :param status: str
     :return:
     """
 
-    if not comment:
-        comment = {'id': ''}
+    task = get_task(task_id, as_dict=True)
+    if not task:
+        return
 
-    return gazu.task.add_preview(task_id, comment, preview_file_path)
+    comment = add_comment_to_task(task_id=task_id, comment=comment, status=status)
+    if not comment:
+        return None
+
+    return gazu.task.add_preview(task, comment, preview_file_path)
