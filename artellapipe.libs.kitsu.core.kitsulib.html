@@ -176,6 +176,16 @@
 <span id="artellapipe-libs-kitsu-core-kitsulib-module"></span><h1>artellapipe.libs.kitsu.core.kitsulib module<a class="headerlink" href="#module-artellapipe.libs.kitsu.core.kitsulib" title="Permalink to this headline">¶</a></h1>
 <p>Utility module that contains useful utilities and classes related with Kitsu</p>
 <dl class="py function">
+<dt id="artellapipe.libs.kitsu.core.kitsulib.add_comment_to_task">
+<code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">add_comment_to_task</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">task_id</span></em>, <em class="sig-param"><span class="n">comment</span></em>, <em class="sig-param"><span class="n">status</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.add_comment_to_task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds comment to given task
+:param task_id:
+:param comment:
+:param status:
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
 <dt id="artellapipe.libs.kitsu.core.kitsulib.all_asset_types_for_project">
 <code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">all_asset_types_for_project</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">project_id</span></em>, <em class="sig-param"><span class="n">as_dict</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.all_asset_types_for_project" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns asset types from assets listed in the given project
@@ -229,11 +239,19 @@
 </dd></dl>
 
 <dl class="py function">
+<dt id="artellapipe.libs.kitsu.core.kitsulib.get_all_task_statuses">
+<code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">get_all_task_statuses</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">as_dict</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.get_all_task_statuses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all task statuses in current project
+:param as_dict: bool
+:return: list</p>
+</dd></dl>
+
+<dl class="py function">
 <dt id="artellapipe.libs.kitsu.core.kitsulib.get_all_task_types">
 <code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">get_all_task_types</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">as_dict</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.get_all_task_types" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns all task types in current project
-:param as_dict: dict
-:return: list</p>
+:param as_dict: bool
+:return: list or dict</p>
 </dd></dl>
 
 <dl class="py function">
@@ -287,7 +305,7 @@
 
 <dl class="py function">
 <dt id="artellapipe.libs.kitsu.core.kitsulib.get_task">
-<code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">get_task</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">task_id</span></em>, <em class="sig-param"><span class="n">as_dict</span></em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.get_task" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">get_task</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">task_id</span></em>, <em class="sig-param"><span class="n">as_dict</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.get_task" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns task with given id in current project
 :param task_id: str
 :param as_dict: bool
@@ -328,11 +346,12 @@
 
 <dl class="py function">
 <dt id="artellapipe.libs.kitsu.core.kitsulib.upload_shot_task_preview">
-<code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">upload_shot_task_preview</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">task_id</span></em>, <em class="sig-param"><span class="n">preview_file_path</span></em>, <em class="sig-param"><span class="n">comment</span></em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.upload_shot_task_preview" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">artellapipe.libs.kitsu.core.kitsulib.</code><code class="sig-name descname">upload_shot_task_preview</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">task_id</span></em>, <em class="sig-param"><span class="n">preview_file_path</span></em>, <em class="sig-param"><span class="n">comment</span></em>, <em class="sig-param"><span class="n">status</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#artellapipe.libs.kitsu.core.kitsulib.upload_shot_task_preview" title="Permalink to this definition">¶</a></dt>
 <dd><p>Uploads shot task to Kitsu server
 :param task_id: st
 :param preview_file_path: str
 :param comment: str
+:param status: str
 :return:</p>
 </dd></dl>
 
