@@ -244,16 +244,23 @@ class KitsuAsset(object):
         """
 
         asset_id = self.id
+        is_published = False
         custom_id_attr = kitsu_lib.config.get('custom_id_attribute', default=None)
+        custom_is_published_attr = kitsu_lib.config.get('custom_is_published_attribute', default=None)
         if custom_id_attr:
             asset_metadata = self.data or dict()
             asset_id = asset_metadata.get(custom_id_attr, asset_id)
+        if custom_is_published_attr:
+            asset_metadata = self.data or dict()
+            asset_is_published = asset_metadata.get(custom_is_published_attr, 'False')
+            is_published = False if asset_is_published.lower() in ['false', 'no'] else True
 
         return {
             'asset': self,
             'name': self.name,
             'thumb': self.preview_file_id,
-            'id': asset_id
+            'id': asset_id,
+            'is_published': is_published
         }
 
 
