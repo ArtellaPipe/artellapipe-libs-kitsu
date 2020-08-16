@@ -23,48 +23,52 @@ from artellapipe.managers import tracking
 import artellapipe.libs.kitsu as kitsu_lib
 from artellapipe.libs.kitsu.core import kitsulib, kitsuclasses
 
-LOGGER = logging.getLogger()
+LOGGER = logging.getLogger('artellapipe-libs-kitsu')
 
 
+# Do not remove Singleton
 @decorators.Singleton
 class KitsuTrackingManager(tracking.TrackingManager, object):
+
+    _email = None
+    _password = None
+    _store_credentials = False
+    _user_data = dict()
+    _shots_data = dict()
+    _entity_types = list()
+
     def __init__(self):
         tracking.TrackingManager.__init__(self)
 
-        self._email = None
-        self._password = None
-        self._store_credentials = False
-        self._user_data = dict()
-        self._shots_data = dict()
-        self._entity_types = list()
+        self._load_user_settings()
 
     @property
     def email(self):
-        return self._email
+        return self.__class__._email
 
     @email.setter
     def email(self, new_email):
-        self._email = new_email
+        self.__class__._email = new_email
 
     @property
     def password(self):
-        return self._password
+        return self.__class__._password
 
     @password.setter
     def password(self, new_password):
-        self._password = new_password
+        self.__class__._password = new_password
 
     @property
     def store_credentials(self):
-        return self._store_credentials
+        return self.__class__._store_credentials
 
     @store_credentials.setter
     def store_credentials(self, new_store_credentials):
-        self._store_credentials = new_store_credentials
+        self.__class__._store_credentials = new_store_credentials
 
     @property
     def user_data(self):
-        return self._user_data
+        return self.__class__._user_data
 
     def get_name(self):
         """
@@ -86,19 +90,10 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
         Function that resets the information stored of the user
         """
 
-        self._email = None
-        self._password = None
-        self._store_credentials = False
-        self._user_data = None
-
-    def set_project(self, project):
-        """
-        Overrides base TrackingManager
-        :param project: ArtellaProject
-        """
-
-        tracking.TrackingManager.set_project(self, project)
-        self._load_user_settings()
+        self.__class__._email = None
+        self.__class__._password = None
+        self.__class__._store_credentials = False
+        self.__class__._user_data = None
 
     def is_tracking_available(self):
         """
@@ -114,9 +109,10 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
         :return: bool
         """
 
-        email = kwargs.get('email', self._email)
-        password = kwargs.get('password', self._password)
-        store_credentials = kwargs.get('store_credentials', self._store_credentials)
+        email = kwargs.get('email', self._email) or (args[0] if len(args) > 0 else None)
+        password = kwargs.get('password', self._password) or (args[1] if len(args) > 1 else None)
+        store_credentials = kwargs.get(
+            'store_credentials', self._store_credentials) or (args[2] if len(args) > 2 else False)
 
         if not email or not password:
             LOGGER.warning('Impossible to login into Kitsu because username or password are not valid!')
@@ -138,16 +134,16 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
 
         try:
             valid_login = kitsulib.log_in(email, password)
-            self._logged = bool(valid_login)
-            self._user_data = kitsulib.get_current_user()
-            self._project.settings.set('kitsu_store_credentials', store_credentials)
+            self.__class__._logged = bool(valid_login)
+            self.__class__._user_data = kitsulib.get_current_user()
+            artellapipe.project.settings.set('kitsu_store_credentials', store_credentials)
             if store_credentials:
-                self._project.settings.set('kitsu_email', email)
-                self._project.settings.set('kitsu_password', password)
+                artellapipe.project.settings.set('kitsu_email', email)
+                artellapipe.project.settings.set('kitsu_password', password)
             self.logged.emit()
             return True
         except Exception as exc:
-            self._logged = False
+            self.__class__._logged = False
             self.reset_user_info()
             return False
 
@@ -164,14 +160,14 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
             return False
 
         kitsulib.set_host(None)
-        self._logged = False
+        self.__class__._logged = False
         self.reset_user_info()
 
         remove_credentials = kwargs.get('remove_credentials', False)
         if remove_credentials:
-            self._project.settings.set('kitsu_email', '')
-            self._project.settings.set('kitsu_password', '')
-            self._project.settings.set('kitsu_store_credentials', False)
+            artellapipe.project.settings.set('kitsu_email', '')
+            artellapipe.project.settings.set('kitsu_password', '')
+            artellapipe.project.settings.set('kitsu_store_credentials', False)
 
         self._load_user_settings()
 
@@ -561,15 +557,15 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
         Internal function that tries to retrieve user data from project settings
         """
 
-        if not self._project:
+        if not hasattr(artellapipe, 'project') or not artellapipe.project:
             return None
 
-        self._email = self._project.settings.get(
-            'kitsu_email') if self._project.settings.has_setting('kitsu_email') else None
-        self._password = self._project.settings.get(
-            'kitsu_password') if self._project.settings.has_setting('kitsu_password') else None
-        self._store_credentials = self._project.settings.get(
-            'kitsu_store_credentials') if self._project.settings.has_setting('kitsu_store_credentials') else False
+        self.__class__._email = artellapipe.project.settings.get(
+            'kitsu_email') if artellapipe.project.settings.has_setting('kitsu_email') else None
+        self.__class__._password = artellapipe.project.settings.get(
+            'kitsu_password') if artellapipe.project.settings.has_setting('kitsu_password') else None
+        self.__class__._store_credentials = artellapipe.project.settings.get(
+            'kitsu_store_credentials') if artellapipe.project.settings.has_setting('kitsu_store_credentials') else False
 
 
 artellapipe.register.register_class('Tracker', KitsuTrackingManager)
