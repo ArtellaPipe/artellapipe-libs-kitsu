@@ -18,7 +18,7 @@ import logging
 from tpDcc.libs.python import decorators
 from tpDcc.libs.qt.core import qtutils
 
-import artellapipe.register
+import artellapipe
 from artellapipe.managers import tracking
 import artellapipe.libs.kitsu as kitsu_lib
 from artellapipe.libs.kitsu.core import kitsulib, kitsuclasses
@@ -566,6 +566,3 @@ class KitsuTrackingManager(tracking.TrackingManager, object):
             'kitsu_password') if artellapipe.project.settings.has_setting('kitsu_password') else None
         self.__class__._store_credentials = artellapipe.project.settings.get(
             'kitsu_store_credentials') if artellapipe.project.settings.has_setting('kitsu_store_credentials') else False
-
-
-artellapipe.register.register_class('Tracker', KitsuTrackingManager)
