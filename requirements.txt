@@ -1,11 +1,6 @@
 # ===================================================================
 # artellapipe-libs-maya requirements file
 # ===================================================================
-pytest
-pytest-cov
-coveralls
-sphinx
-sphinx_rtd_theme
+gazu==0.7.17
 tpDcc-libs-python
-gazu
 artellapipe
